@@ -2,6 +2,7 @@ module.exports = {
     get: async (req, res) => {
 
         arrays = req.body.matriz
+
         var det = calcMatrix(arrays)
 
         return res.json({ det })
@@ -10,6 +11,7 @@ module.exports = {
 
 function calcMatrix(matrix) {
     matrixLength = matrix[0].length
+
     for (i = 0; i < matrixLength - 1; i++) {
 
         for (j = i + 1; j < matrixLength; j++) {
@@ -17,11 +19,12 @@ function calcMatrix(matrix) {
             // if the pivot is 0, swap with non-zero pivot line
             if (matrix[i][i] == 0) {
                 var n = i + 1
-                while (matrix[n][i] == 0)
+                while (n < matrixLength && matrix[n][i] == 0)
                     n++;
+                if (n == matrixLength)
+                    return 0
                 swapLine(matrix, matrixLength, i, n)
             }
-
             var kappa = matrix[j][i] / matrix[i][i]
 
             for (k = i; k < matrixLength; k++) {
